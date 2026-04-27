@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using System;
+using System.Linq;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Sa3dny.Data.Models;
+using Sa3dny.Models;
 
 namespace Sa3dny.Data
 {
-    public class AppDbContext : IdentityDbContext
+    // ✅ التعديل: الوراثة من IdentityDbContext<ApplicationUser> لدعم الموديل المخصص
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -13,6 +17,7 @@ namespace Sa3dny.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Provider> Providers { get; set; }
         public DbSet<Requests> Requests { get; set; }
+        public DbSet<ProviderOffer> ProviderOffers { get; set; } // ✅ إضافة ProviderOffers
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Home_Service> Home_Services { get; set; }
@@ -22,13 +27,37 @@ namespace Sa3dny.Data
         public DbSet<Location> Locations { get; set; }
         public DbSet<Governorate> Governorates { get; set; }
         public DbSet<ServiceCategory> ServiceCategories { get; set; }
+        public DbSet<Notification> Notifications { get; set; } // ✅ إضافة Notifications
+        public DbSet<ChatMessage> ChatMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            // ✅ ضبط العلاقات لمنع الـ Cascade Cycles (مهم جداً للـ SQL Server)
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
+            // ✅ استثناء علاقات الربط مع اليوزر (حذف اليوزر يحذف ملفه الشخصي)
+            modelBuilder.Entity<Customer>()
+                .HasOne(c => c.User).WithOne().HasForeignKey<Customer>(c => c.UserId).OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Provider>()
+                .HasOne(p => p.User).WithOne().HasForeignKey<Provider>(p => p.UserId).OnDelete(DeleteBehavior.Cascade);
+
+            // ==========================================
+            // ✅ الحل البرمجي لمشكلة العلاقة بين العروض والطلبات
+            // ==========================================
+            modelBuilder.Entity<ProviderOffer>()
+                .HasOne(po => po.Request)        // العرض يرتبط بطلب واحد
+                .WithMany(r => r.Offers)         // الطلب له قائمة عروض (Offers)
+                .HasForeignKey(po => po.RequestId) // المفتاح الأجنبي هو RequestId
+                .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Provider_Service>()
-                .HasKey(ps => new { ps.provider_id, ps.service_id });
+                .HasKey(ps => new { ps.ProviderId, ps.ServiceId }); // ✅ تحديث أسماء الحقول لتناسب الموديل الجديد
 
             modelBuilder.Entity<Requests>()
                 .Property(r => r.Total_Price)
@@ -38,82 +67,32 @@ namespace Sa3dny.Data
                 .Property(s => s.Min_price)
                 .HasPrecision(18, 2);
 
-            modelBuilder.Entity<Provider_Service>()
-                .HasOne(ps => ps.Provider)
-                .WithMany(p => p.provider_Services)
-                .HasForeignKey(ps => ps.provider_id)
-                .OnDelete(DeleteBehavior.NoAction); 
+            modelBuilder.Entity<ProviderOffer>() // ✅ إضافة Precision لجدول العروض
+                .Property(p => p.Price)
+                .HasPrecision(18, 2);
 
-            modelBuilder.Entity<Provider_Service>()
-                .HasOne(ps => ps.Service)
-                .WithMany(s => s.provider_services)
-                .HasForeignKey(ps => ps.service_id)
-                .OnDelete(DeleteBehavior.NoAction); 
-
-            modelBuilder.Entity<Review>().HasKey(r => r.Review_Id);
-
-            modelBuilder.Entity<Review>()
-                .HasOne(r => r.customer)
-                .WithMany(c => c.reviews)
-                .HasForeignKey(r => r.Customer_Id)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Review>()
-                .HasOne(r => r.provider)
-                .WithMany(p => p.reviews)
-                .HasForeignKey(r => r.Provider_Id)
-                .OnDelete(DeleteBehavior.NoAction); 
-
-            modelBuilder.Entity<Review>()
-                .HasOne(r => r.requests)
-                .WithMany(req => req.reviews)
-                .HasForeignKey(r => r.Request_Id)
-                .OnDelete(DeleteBehavior.Restrict);
-
-
-            modelBuilder.Entity<Provider>()
-                .HasOne(p => p.Governorate)
-                .WithMany(g => g.Providers)
-                .HasForeignKey(p => p.GovernorateId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Provider>()
-                .HasOne(p => p.ServiceCategory)
-                .WithMany(sc => sc.Providers)
-                .HasForeignKey(p => p.ServiceCategoryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            
-            modelBuilder.Entity<Provider>()
-                .HasOne(p => p.Service)
-                .WithMany()
-                .HasForeignKey(p => p.ServiceId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            
+            // ✅ بذرة البيانات (Seed Data)
             modelBuilder.Entity<ServiceCategory>().HasData(
                 new ServiceCategory { Id_Category = 1, Name_Category = "Home Services" },
                 new ServiceCategory { Id_Category = 2, Name_Category = "Educational Services" },
                 new ServiceCategory { Id_Category = 3, Name_Category = "Healthcare Services" }
             );
 
-            
             modelBuilder.Entity<Service>().HasData(
-                new Service { service_id = 1, service_name = "Cleaning", Description = "Home cleaning service", Min_price = 0 },
-                new Service { service_id = 2, service_name = "Plumbing", Description = "Plumbing service", Min_price = 0 },
-                new Service { service_id = 3, service_name = "Electricity", Description = "Electrical service", Min_price = 0 },
-                new Service { service_id = 4, service_name = "Carpentry", Description = "Carpentry service", Min_price = 0 },
-                new Service { service_id = 5, service_name = "Word / Report", Description = "Word and report writing", Min_price = 0 },
-                new Service { service_id = 6, service_name = "Presentation", Description = "Presentation design", Min_price = 0 },
-                new Service { service_id = 7, service_name = "Excel", Description = "Excel sheets service", Min_price = 0 },
-                new Service { service_id = 8, service_name = "CV Creation", Description = "CV writing service", Min_price = 0 },
-                new Service { service_id = 9, service_name = "Home Nursing", Description = "Nursing at home", Min_price = 0 },
-                new Service { service_id = 10, service_name = "Doctor Visit", Description = "Doctor home visit", Min_price = 0 },
-                new Service { service_id = 11, service_name = "Injection Service", Description = "Injection at home", Min_price = 0 },
-                new Service { service_id = 12, service_name = "Follow-up", Description = "Medical follow-up", Min_price = 0 }
+                new Service { service_id = Guid.Parse("11111111-1111-1111-1111-111111111111"), service_name = "Cleaning", Description = "Home cleaning service", Min_price = 0 },
+                new Service { service_id = Guid.Parse("22222222-2222-2222-2222-222222222222"), service_name = "Plumbing", Description = "Plumbing service", Min_price = 0 },
+                new Service { service_id = Guid.Parse("33333333-3333-3333-3333-333333333333"), service_name = "Electricity", Description = "Electrical service", Min_price = 0 },
+                new Service { service_id = Guid.Parse("44444444-4444-4444-4444-444444444444"), service_name = "Carpentry", Description = "Carpentry service", Min_price = 0 },
+                new Service { service_id = Guid.Parse("55555555-5555-5555-5555-555555555555"), service_name = "Word / Report", Description = "Word and report writing", Min_price = 0 },
+                new Service { service_id = Guid.Parse("66666666-6666-6666-6666-666666666666"), service_name = "Presentation", Description = "Presentation design", Min_price = 0 },
+                new Service { service_id = Guid.Parse("77777777-7777-7777-7777-777777777777"), service_name = "Excel", Description = "Excel sheets service", Min_price = 0 },
+                new Service { service_id = Guid.Parse("88888888-8888-8888-8888-888888888888"), service_name = "CV Creation", Description = "CV writing service", Min_price = 0 },
+                new Service { service_id = Guid.Parse("99999999-9999-9999-9999-999999999999"), service_name = "Home Nursing", Description = "Nursing at home", Min_price = 0 },
+                new Service { service_id = Guid.Parse("10101010-1010-1010-1010-101010101010"), service_name = "Doctor Visit", Description = "Doctor home visit", Min_price = 0 },
+                new Service { service_id = Guid.Parse("12121212-1212-1212-1212-121212121212"), service_name = "Injection Service", Description = "Injection at home", Min_price = 0 },
+                new Service { service_id = Guid.Parse("13131313-1313-1313-1313-131313131313"), service_name = "Follow-up", Description = "Medical follow-up", Min_price = 0 }
             );
 
-           
             modelBuilder.Entity<Governorate>().HasData(
                 new Governorate { Id_Governorate = 1, Name_Governorate = "Cairo" },
                 new Governorate { Id_Governorate = 2, Name_Governorate = "Giza" },
@@ -144,7 +123,6 @@ namespace Sa3dny.Data
                 new Governorate { Id_Governorate = 27, Name_Governorate = "Matruh" }
             );
 
-            
             modelBuilder.Entity<Location>().HasData(
                 new Location { Id_Location = 1, Name_Location = "Ferial" },
                 new Location { Id_Location = 2, Name_Location = "Mousna3 Sayed" },

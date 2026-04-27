@@ -1,52 +1,60 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Sa3dny.Data.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sa3dny.Data.Models
 {
-    public class Provider : ApplicationUser
+    public class Provider
     {
         [Key]
-        public int provider_id { get; set; }
+        public Guid provider_id { get; set; } = Guid.NewGuid();
 
         [Required]
-        [DisplayName("National ID")]
+        public string UserId { get; set; } // تم تغييره لـ string
+
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
+
+        [Required]
         [StringLength(14)]
         public string national_id_Provider { get; set; }
 
-        [DisplayName("Rate")]
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string LocationName { get; set; }
+
+        public DateTime created_at { get; set; } = DateTime.UtcNow;
+
         public double? rate_Provider { get; set; }
 
         [Required]
-        [DisplayName("Governorate")]
-        public int GovernorateId { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
-        [ForeignKey("GovernorateId")]
+        [Required]
+        [StringLength(11)]
+        public string Phone { get; set; }
+
+        [Required]
+        public int GovernorateId { get; set; }
         public Governorate Governorate { get; set; }
 
         [Required]
-        [DisplayName("Service Category")]
         public int ServiceCategoryId { get; set; }
-
-        [ForeignKey("ServiceCategoryId")]
         public ServiceCategory ServiceCategory { get; set; }
 
         [Required]
-        [DisplayName("Service")]
-        public int ServiceId { get; set; }
-
-        [ForeignKey("ServiceId")]
+        public Guid ServiceId { get; set; }
         public Service Service { get; set; }
 
-       
-
         [Required]
-        [DisplayName("National ID Image")]
         public string NationalIdImagePath { get; set; }
 
         [Required]
-        [DisplayName("Professional License")]
         public string ProfessionalLicensePath { get; set; }
 
         public ICollection<Review> reviews { get; set; }

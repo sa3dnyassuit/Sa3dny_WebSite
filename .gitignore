@@ -1,5 +1,29 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
+﻿## Visual Studio الملفات المؤقتة الخاصة بـ
+.vs/
+[Bb]in/
+[Oo]bj/
+out/
+*.user
+*.userosscache
+*.sln.doccache
 
-/.vs
+## Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+
+## ملفات نظام التشغيل
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+## ملفات الإعدادات الحساسة (لو عندك ملفات فيها باسوردات)
+appsettings.Development.json
+secrets.json
+
+## ملفات النشر والـ Publish
+publish/
+*.pubxml

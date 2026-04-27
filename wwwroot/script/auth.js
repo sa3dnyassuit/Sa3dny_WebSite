@@ -1,12 +1,11 @@
 ﻿const API_BASE_URL = 'https://recite-slander-riverboat.ngrok-free.dev/api/Auth';
 
-// ======================== أولاً: كود تسجيل حساب جديد (Register) ========================
 const registerForm = document.getElementById('registerForm');
 if (registerForm) {
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // 1. جلب القيم من العناصر
+        
         const fullName = document.getElementById('regFullName').value.trim();
         const phone = document.getElementById('regPhone').value.trim();
         const location = document.getElementById('regLocation').value;
@@ -14,13 +13,13 @@ if (registerForm) {
         const password = document.getElementById('regPassword').value;
         const confirmPassword = document.getElementById('regConfirmPassword').value;
 
-        // 2. التحقق من وجود بيانات ناقصة (Frontend Validation)
+        
         if (!fullName || !phone || !location || !email || !password || !confirmPassword) {
             alert("برجاء إكمال كافة الحقول المطلوبة.");
             return;
         }
 
-        // 3. التحقق من تطابق كلمة المرور
+        
         if (password !== confirmPassword) {
             alert("كلمتا المرور غير متطابقتين!");
             return;
@@ -78,7 +77,7 @@ if (loginForm) {
         const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
 
-        // التحقق من إدخال البيانات
+        
         if (!email || !password) {
             alert("برجاء إدخال البريد الإلكتروني وكلمة المرور.");
             return;
@@ -102,7 +101,7 @@ if (loginForm) {
             const result = await response.json();
 
             if (response.ok) {
-                // حفظ البيانات في المتصفح
+                
                 localStorage.setItem('token', result.token);
                 localStorage.setItem('userName', result.name);
                 localStorage.setItem('userRole', result.role);
@@ -110,7 +109,7 @@ if (loginForm) {
                 alert(`أهلاً بك مجدداً يا ${result.name}!`);
                 window.location.href = '../pages/index.html';
             } else {
-                // رسالة واضحة في حالة وجود خطأ في البيانات
+                
                 if (response.status === 401) {
                     alert("البريد الإلكتروني أو كلمة المرور غير صحيحة، حاول مرة أخرى.");
                 } else {

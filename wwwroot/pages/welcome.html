@@ -1,131 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Sa3dny</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="../style/welcome.css">
+    <meta charset="UTF-8">
+    <title>Sa3dny</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/welcome.css">
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
-  <nav class="navbar">
-    <div class="back">
-      <button class="back-btn" onclick="history.back()" data-ar="رجوع" data-en="back">back</button>
-    </div>
-    <div class="nav-logo">
-      <img src="../images/logo white.PNG" alt="Sa3dny">
-    </div>
-<div class="toggle-btn" id="toggle-btn">
-      <div class="toggle-circle" id="language-circle">English</div>
-    </div>
-    <ul class="nav-links">
-      <li><a href="#" data-ar="خدمات" data-en="Services">Services</a></li>
-      |
-      <li><a href="../pages/register.html" data-ar="تسجيل حساب جديد" data-en="Sign up">Sign up</a></li>
-      |
-      <li><a href="../login.html" data-ar="دخول" data-en="Log in">Log in</a></li>
-      <li><a href="../pages/become-provider.html" class="provider-btn" data-ar="إصبح مقدم خدمة" data-en="Become a Provider">Become a Provider</a></li>
-    </ul>
-  </nav>
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar">
+        <div class="back">
+            <button class="back-btn" onclick="history.back()" data-ar="رجوع" data-en="back">back</button>
+        </div>
+        <div class="nav-logo">
+            <img src="../images/logo white.PNG" alt="Sa3dny">
+        </div>
+        <div class="toggle-btn" id="toggle-btn">
+            <div class="toggle-circle" id="language-circle">English</div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" data-ar="خدمات" data-en="Services">Services</a></li>
+            |
+            <li><a href="../pages/register.html" data-ar="تسجيل حساب جديد" data-en="Sign up">Sign up</a></li>
+            |
+            <li><a href="../login.html" data-ar="دخول" data-en="Log in">Log in</a></li>
+            <li><a href="../pages/become-provider.html" class="provider-btn" data-ar="إصبح مقدم خدمة" data-en="Become a Provider">Become a Provider</a></li>
+        </ul>
+    </nav>
 
-<!-- ================= BACKGROUND ================= -->
-<div class="background"></div>
-  <!-- ================= MAIN ================= -->
-<div class="main-content">
+    <!-- ================= BACKGROUND ================= -->
+    <div class="background"></div>
+    <!-- ================= MAIN ================= -->
+    <div class="main-content">
 
-<div class="hero-wrap">
+        <div class="hero-wrap">
 
-<div class="services-orbit">
+            <div class="services-orbit">
 
-<a class="service-bubble pos-left-top" href="../pages/cleaning-service.html">
-  <div class="bubble-face">
-    <img src="../images/icons/cleaning.png" class="bubble-icon-img">
-  </div>
-</a>
+                <a class="service-bubble pos-left-top" href="#" onclick="openServiceForm('Cleaning')">
 
-<a class="service-bubble pos-left-mid" href="electric.html">
-<img src="../images/icons/hour.png" class="bubble-icon-img">
-</a>
+                    <div class="bubble-face">
+                        <img src="../images/icons/cleaning (3).png" class="bubble-icon-img">
+                    </div>
 
-<a class="service-bubble pos-left-bot" href="plumbing.html">
-<img src="../images/icons/id-card.png" class="bubble-icon-img">
-</a>
+                    <span class="service-label">Cleaning</span>
 
-<a class="service-bubble pos-right-top" href="delivery.html">
-<img src="../images/icons/moto.png" class="bubble-icon-img">
-</a>
+                </a>
 
-<a class="service-bubble pos-right-mid" href="medical.html">
-<img src="../images/icons/hospital.png" class="bubble-icon-img">
-</a>
+                <a class="service-bubble pos-left-mid" href="#" onclick="openServiceForm('Plumbing');">
+                    <img src="../images/icons/piumbing.png" class="bubble-icon-img">
+                </a>
 
-<a class="service-bubble pos-right-bot" href="shopping.html">
-<img src="../images/icons/medicine.png" class="bubble-icon-img">
-</a>
+                <a class="service-bubble pos-left-bot" href="#" onclick="openServiceForm('Carpenter') ;">
+                    <img src="../images/icons/carpenter_transparent.png" class="bubble-icon-img">
+                </a>
 
-</div>
+                <a class="service-bubble pos-right-top" href="#" onclick="openServiceForm('injection'); ">
+                    <img src="../images/icons/injection.png" class="bubble-icon-img">
+                </a>
 
-<!-- CARD -->
-<div class="container">
+                <a class="service-bubble pos-right-mid" href="#" onclick="openServiceForm('Nursing'); ">
+                    <img src="../images/icons/nursing.png" class="bubble-icon-img">
+                </a>
 
-<div class="card">
+                <a class="service-bubble pos-right-bot" href="#" onclick="openServiceForm('presentation'); ">
+                    <img src="../images/icons/presentation.png" class="bubble-icon-img">
+                </a>
 
-<div class="card-inner">
+            </div>
 
-<div class="card-front">
+            <!-- CARD -->
+            <div class="container">
 
-<img src="../images/logo white.PNG" alt="Sa3dny Logo" class="logo">
-    <h2 data-ar="مرحباً بك فى منصة ساعدنى" data-en="Welcome to Sa3dny!">Welcome to Sa3dny!</h2>
-    <p data-ar="اعثر بسهولة على افضل الخدمات المحليه" data-en="Find top local services easily.">Find top local services easily.</p> 
+                <div class="card">
 
-<div class="guidance-text">
+                    <div class="card-inner">
 
-<p class="main-hint" data-ar="مرَر المؤشر للتسجيل والبدء" data-en="Hover to Register & Start">Hover to Register & Start</p>
-<p class="side-hint" data-ar="←اطلع على الخدمات الموجوده على الجانبين→" data-en="← Check services on the sides →">← Check services on the sides →</p>
+                        <div class="card-front">
 
-</div>
+                            <img src="../images/logo white.PNG" alt="Sa3dny Logo" class="logo">
+                            <h2 data-ar="مرحباً بك فى منصة ساعدنى" data-en="Welcome to Sa3dny!">Welcome to Sa3dny!</h2>
+                            <p data-ar="اعثر بسهولة على افضل الخدمات المحليه" data-en="Find top local services easily.">Find top local services easily.</p>
 
-</div>
+                            <div class="guidance-text">
 
-<!-- BACK (EXACTLY AS YOU SENT) -->
-        <div class="card-back">
-          <img src="../images/logo white.PNG" alt="Sa3dny Logo" class="logo">
-          <p class="p" data-ar="اعثر على افضل الخدمات المحلية مع ساعدنى" data-en="Find top local sevices with sa3dny">Find top local sevices with sa3dny</p>
-          <a href="../pages/register.html"><button class="Sign_up" data-ar="تسجيل حساب جديد" data-en="Sign up">Sign up</button></a>
-          <a href="../pages/login.html"><button class="Log_in" data-ar="دخول" data-en="Log in">Log in</button></a>
-          <p class="paragraph">
-            <span class="text" data-ar="بتسجيلك فأنت توافق على" data-en="By signing up you agree to our">By signing up you agree to our</span>
-            <a href="#"><span class="span" data-ar="شروط الاستخدام" data-en="Terms of Use">Terms of Use</span></a>
-            <span data-ar="و" data-en="and">and</span>
-            <a href="#"><span class="span" data-ar="سياسة الخصوصية" data-en="Privacy Policy">Privacy Policy</span></a>
-          </p>
+                                <p class="main-hint" data-ar="مرَر المؤشر للتسجيل والبدء" data-en="Hover to Register & Start">Hover to Register & Start</p>
+                                <p class="side-hint" data-ar="←اطلع على الخدمات الموجوده على الجانبين→" data-en="← Check services on the sides →">← Check services on the sides →</p>
+
+                            </div>
+
+                        </div>
+
+                        <!-- BACK (EXACTLY AS YOU SENT) -->
+                        <div class="card-back">
+                            <img src="../images/logo white.PNG" alt="Sa3dny Logo" class="logo">
+                            <p class="p" data-ar="اعثر على افضل الخدمات المحلية مع ساعدنى" data-en="Find top local sevices with sa3dny">Find top local sevices with sa3dny</p>
+                            <a href="../pages/register.html"><button class="Sign_up" data-ar="تسجيل حساب جديد" data-en="Sign up">Sign up</button></a>
+                            <a href="../pages/login.html"><button class="Log_in" data-ar="دخول" data-en="Log in">Log in</button></a>
+                            <p class="paragraph">
+                                <span class="text" data-ar="بتسجيلك فأنت توافق على" data-en="By signing up you agree to our">By signing up you agree to our</span>
+                                <a href="#"><span class="span" data-ar="شروط الاستخدام" data-en="Terms of Use">Terms of Use</span></a>
+                                <span data-ar="و" data-en="and">and</span>
+                                <a href="#"><span class="span" data-ar="سياسة الخصوصية" data-en="Privacy Policy">Privacy Policy</span></a>
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-  <!-- ================= HELP BUTTON ================= -->
-  <button class="chat" data-ar="مساعدة ؟" data-en="Help?">Help?</button>
-
-  <!-- ================= FOOTER ================= -->
-  <footer class="footer">
-    <div class="footer-links">
-      <a href="#" data-ar="سياسة الخصوصية" data-en="Privacy Policy">Privacy Policy</a>
-      <a href="#"data-ar="شروط الأستخدام" data-en="Terms of Use">Terms of Use</a>
-      <a href="#"data-ar="تواصل معنا" data-en="Contact">Contact</a>
     </div>
-  </footer>
+    <!-- ================= HELP BUTTON ================= -->
+    <button class="chat" data-ar="مساعدة ؟" data-en="Help?">Help?</button>
 
-<script src="../script/service-bubbles.js"></script>
-<script src="../script/translate.js"></script>
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#" data-ar="سياسة الخصوصية" data-en="Privacy Policy">Privacy Policy</a>
+            <a href="#" data-ar="شروط الأستخدام" data-en="Terms of Use">Terms of Use</a>
+            <a href="#" data-ar="تواصل معنا" data-en="Contact">Contact</a>
+        </div>
+    </footer>
+    <div class="service-form-overlay" id="serviceFormOverlay">
+        <div class="service-form-box">
+            <span class="close-form" onclick="closeServiceForm()">&times;</span>
+
+            <h2 id="selectedServiceTitle">Service Request</h2>
+
+            <form id="serviceRequestForm">
+                <input type="text" id="serviceName" readonly>
+                <textarea id="problemDetails" placeholder="Write your problem..." required></textarea>
+                <input type="text" id="address" placeholder="Enter your address" required>
+                <input type="tel" id="phone" placeholder="Enter your phone number" required>
+                <button type="submit">Send Request</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../script/service-bubbles.js"></script>
+    <script src="../script/translate.js"></script>
+    <script src="../script/service-form.js"></script>
 
 </body>
 </html>

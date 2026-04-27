@@ -1,29 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Sa3dny.Data.Models
 {
     public class Review
     {
         [Key]
-        public int Review_Id { get; set; }
-        [ForeignKey(nameof(provider))]
-        public int Provider_Id { get; set; }
-        [ForeignKey(nameof(requests))]
-        public int Request_Id { get; set; }
-        [ForeignKey(nameof(customer))]
-        public int Customer_Id { get; set; }
+        public Guid Review_Id { get; set; } = Guid.NewGuid();
 
-        public int Rate { get; set; }
-        public string Comment { get; set; }
-        public DateTime Date { get; set; }
-
-        public Customer customer { get; set; }
+        [Required]
+        public Guid Provider_Id { get; set; }
+        [ForeignKey("Provider_Id")]
         public Provider provider { get; set; }
-        public Requests  requests { get; set; }
+
+        [Required]
+        public Guid Request_Id { get; set; }
+        [ForeignKey("Request_Id")]
+        public Requests requests { get; set; }
+
+        [Required]
+        public Guid Customer_Id { get; set; }
+        [ForeignKey("Customer_Id")]
+        public Customer customer { get; set; }
+
+        [Range(1, 5)]
+        public int Rate { get; set; }
+
+        public string Comment { get; set; }
+
+        public DateTime Date { get; set; } = DateTime.UtcNow;
     }
 }

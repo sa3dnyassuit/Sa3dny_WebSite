@@ -12,8 +12,8 @@ using Sa3dny.Data;
 namespace Sa3dny.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260411133820_FinalAuth")]
-    partial class FinalAuth
+    [Migration("20260426185026_chat")]
+    partial class chat
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -75,71 +75,6 @@ namespace Sa3dny.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -244,13 +179,118 @@ namespace Sa3dny.Migrations
                     b.ToTable("Admin");
                 });
 
-            modelBuilder.Entity("Sa3dny.Data.Models.Customer", b =>
+            modelBuilder.Entity("Sa3dny.Data.Models.ApplicationUser", b =>
                 {
-                    b.Property<int>("Id_Customer")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Customer"));
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LocationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime?>("created_at")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Sa3dny.Data.Models.ChatMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestId");
+
+                    b.ToTable("ChatMessages");
+                });
+
+            modelBuilder.Entity("Sa3dny.Data.Models.Customer", b =>
+                {
+                    b.Property<Guid>("Id_Customer")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -259,37 +299,45 @@ namespace Sa3dny.Migrations
                     b.Property<int?>("GovernorateId_Governorate")
                         .HasColumnType("int");
 
-                    b.Property<int>("LocationId")
+                    b.Property<int?>("LocationId_Location")
                         .HasColumnType("int");
+
+                    b.Property<string>("LocationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
-                    b.Property<DateTime?>("created_at")
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("created_at")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id_Customer");
 
                     b.HasIndex("GovernorateId_Governorate");
 
-                    b.HasIndex("LocationId");
+                    b.HasIndex("LocationId_Location");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("Sa3dny.Data.Models.Edu_Service", b =>
                 {
-                    b.Property<int>("Service_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Service_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Category_name")
                         .IsRequired()
@@ -460,8 +508,8 @@ namespace Sa3dny.Migrations
 
             modelBuilder.Entity("Sa3dny.Data.Models.Home_Service", b =>
                 {
-                    b.Property<int>("Service_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Service_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Category_name")
                         .IsRequired()
@@ -545,11 +593,9 @@ namespace Sa3dny.Migrations
 
             modelBuilder.Entity("Sa3dny.Data.Models.Provider", b =>
                 {
-                    b.Property<int>("provider_id")
+                    b.Property<Guid>("provider_id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("provider_id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -558,8 +604,9 @@ namespace Sa3dny.Migrations
                     b.Property<int>("GovernorateId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
+                    b.Property<string>("LocationName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -569,13 +616,10 @@ namespace Sa3dny.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<string>("ProfessionalLicensePath")
                         .IsRequired()
@@ -584,10 +628,14 @@ namespace Sa3dny.Migrations
                     b.Property<int>("ServiceCategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ServiceId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("created_at")
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("created_at")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("national_id_Provider")
@@ -602,61 +650,100 @@ namespace Sa3dny.Migrations
 
                     b.HasIndex("GovernorateId");
 
-                    b.HasIndex("LocationId");
-
                     b.HasIndex("ServiceCategoryId");
 
                     b.HasIndex("ServiceId");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("Providers");
+                });
+
+            modelBuilder.Entity("Sa3dny.Data.Models.ProviderOffer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ProviderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProviderId");
+
+                    b.HasIndex("RequestId");
+
+                    b.ToTable("ProviderOffers");
                 });
 
             modelBuilder.Entity("Sa3dny.Data.Models.Provider_Service", b =>
                 {
-                    b.Property<int>("provider_id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ProviderId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("service_id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("ServiceId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("provider_id", "service_id");
+                    b.HasKey("ProviderId", "ServiceId");
 
-                    b.HasIndex("service_id");
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Provider_Services");
                 });
 
             modelBuilder.Entity("Sa3dny.Data.Models.Requests", b =>
                 {
-                    b.Property<int>("Request_Id")
+                    b.Property<Guid>("Request_Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Request_Id"));
+                    b.Property<Guid?>("AcceptedOfferId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Created_At")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Customer_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Customer_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description_Req")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Provider_Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Service_Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
+                    b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Time")
+                    b.Property<Guid?>("Provider_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("Service_Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Time")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Total_Price")
+                    b.Property<decimal?>("Total_Price")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
@@ -664,6 +751,8 @@ namespace Sa3dny.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Request_Id");
+
+                    b.HasIndex("AcceptedOfferId");
 
                     b.HasIndex("Customer_Id");
 
@@ -676,30 +765,28 @@ namespace Sa3dny.Migrations
 
             modelBuilder.Entity("Sa3dny.Data.Models.Review", b =>
                 {
-                    b.Property<int>("Review_Id")
+                    b.Property<Guid>("Review_Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Review_Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Customer_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Customer_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Provider_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Provider_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Rate")
                         .HasColumnType("int");
 
-                    b.Property<int>("Request_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("Request_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Review_Id");
 
@@ -714,11 +801,9 @@ namespace Sa3dny.Migrations
 
             modelBuilder.Entity("Sa3dny.Data.Models.Service", b =>
                 {
-                    b.Property<int>("service_id")
+                    b.Property<Guid>("service_id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("service_id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -744,84 +829,84 @@ namespace Sa3dny.Migrations
                     b.HasData(
                         new
                         {
-                            service_id = 1,
+                            service_id = new Guid("11111111-1111-1111-1111-111111111111"),
                             Description = "Home cleaning service",
                             Min_price = 0m,
                             service_name = "Cleaning"
                         },
                         new
                         {
-                            service_id = 2,
+                            service_id = new Guid("22222222-2222-2222-2222-222222222222"),
                             Description = "Plumbing service",
                             Min_price = 0m,
                             service_name = "Plumbing"
                         },
                         new
                         {
-                            service_id = 3,
+                            service_id = new Guid("33333333-3333-3333-3333-333333333333"),
                             Description = "Electrical service",
                             Min_price = 0m,
                             service_name = "Electricity"
                         },
                         new
                         {
-                            service_id = 4,
+                            service_id = new Guid("44444444-4444-4444-4444-444444444444"),
                             Description = "Carpentry service",
                             Min_price = 0m,
                             service_name = "Carpentry"
                         },
                         new
                         {
-                            service_id = 5,
+                            service_id = new Guid("55555555-5555-5555-5555-555555555555"),
                             Description = "Word and report writing",
                             Min_price = 0m,
                             service_name = "Word / Report"
                         },
                         new
                         {
-                            service_id = 6,
+                            service_id = new Guid("66666666-6666-6666-6666-666666666666"),
                             Description = "Presentation design",
                             Min_price = 0m,
                             service_name = "Presentation"
                         },
                         new
                         {
-                            service_id = 7,
+                            service_id = new Guid("77777777-7777-7777-7777-777777777777"),
                             Description = "Excel sheets service",
                             Min_price = 0m,
                             service_name = "Excel"
                         },
                         new
                         {
-                            service_id = 8,
+                            service_id = new Guid("88888888-8888-8888-8888-888888888888"),
                             Description = "CV writing service",
                             Min_price = 0m,
                             service_name = "CV Creation"
                         },
                         new
                         {
-                            service_id = 9,
+                            service_id = new Guid("99999999-9999-9999-9999-999999999999"),
                             Description = "Nursing at home",
                             Min_price = 0m,
                             service_name = "Home Nursing"
                         },
                         new
                         {
-                            service_id = 10,
+                            service_id = new Guid("10101010-1010-1010-1010-101010101010"),
                             Description = "Doctor home visit",
                             Min_price = 0m,
                             service_name = "Doctor Visit"
                         },
                         new
                         {
-                            service_id = 11,
+                            service_id = new Guid("12121212-1212-1212-1212-121212121212"),
                             Description = "Injection at home",
                             Min_price = 0m,
                             service_name = "Injection Service"
                         },
                         new
                         {
-                            service_id = 12,
+                            service_id = new Guid("13131313-1313-1313-1313-131313131313"),
                             Description = "Medical follow-up",
                             Min_price = 0m,
                             service_name = "Follow-up"
@@ -862,30 +947,66 @@ namespace Sa3dny.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Sa3dny.Models.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Sa3dny.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Sa3dny.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -894,46 +1015,63 @@ namespace Sa3dny.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Sa3dny.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                    b.HasOne("Sa3dny.Data.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Sa3dny.Data.Models.ChatMessage", b =>
+                {
+                    b.HasOne("Sa3dny.Data.Models.Requests", "Request")
+                        .WithMany()
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Request");
                 });
 
             modelBuilder.Entity("Sa3dny.Data.Models.Customer", b =>
                 {
                     b.HasOne("Sa3dny.Data.Models.Governorate", null)
                         .WithMany("Customers")
-                        .HasForeignKey("GovernorateId_Governorate");
+                        .HasForeignKey("GovernorateId_Governorate")
+                        .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Sa3dny.Data.Models.Location", "Location")
+                    b.HasOne("Sa3dny.Data.Models.Location", null)
                         .WithMany("Customers")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("LocationId_Location")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Sa3dny.Data.Models.ApplicationUser", "User")
+                        .WithOne()
+                        .HasForeignKey("Sa3dny.Data.Models.Customer", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Location");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Sa3dny.Data.Models.Edu_Service", b =>
                 {
                     b.HasOne("Sa3dny.Data.Models.Service", "service")
-                        .WithOne("Edu_Service")
-                        .HasForeignKey("Sa3dny.Data.Models.Edu_Service", "Service_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany()
+                        .HasForeignKey("Service_Id")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("service");
@@ -942,9 +1080,9 @@ namespace Sa3dny.Migrations
             modelBuilder.Entity("Sa3dny.Data.Models.Home_Service", b =>
                 {
                     b.HasOne("Sa3dny.Data.Models.Service", "service")
-                        .WithOne("Home_Service")
-                        .HasForeignKey("Sa3dny.Data.Models.Home_Service", "Service_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany()
+                        .HasForeignKey("Service_Id")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("service");
@@ -954,7 +1092,8 @@ namespace Sa3dny.Migrations
                 {
                     b.HasOne("Sa3dny.Data.Models.Governorate", null)
                         .WithMany("Locations")
-                        .HasForeignKey("GovernorateId_Governorate");
+                        .HasForeignKey("GovernorateId_Governorate")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Sa3dny.Data.Models.Provider", b =>
@@ -962,12 +1101,6 @@ namespace Sa3dny.Migrations
                     b.HasOne("Sa3dny.Data.Models.Governorate", "Governorate")
                         .WithMany("Providers")
                         .HasForeignKey("GovernorateId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Sa3dny.Data.Models.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -980,30 +1113,55 @@ namespace Sa3dny.Migrations
                     b.HasOne("Sa3dny.Data.Models.Service", "Service")
                         .WithMany()
                         .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Sa3dny.Data.Models.ApplicationUser", "User")
+                        .WithOne()
+                        .HasForeignKey("Sa3dny.Data.Models.Provider", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Governorate");
 
-                    b.Navigation("Location");
-
                     b.Navigation("Service");
 
                     b.Navigation("ServiceCategory");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Sa3dny.Data.Models.ProviderOffer", b =>
+                {
+                    b.HasOne("Sa3dny.Data.Models.Provider", "Provider")
+                        .WithMany()
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Sa3dny.Data.Models.Requests", "Request")
+                        .WithMany("Offers")
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Provider");
+
+                    b.Navigation("Request");
                 });
 
             modelBuilder.Entity("Sa3dny.Data.Models.Provider_Service", b =>
                 {
                     b.HasOne("Sa3dny.Data.Models.Provider", "Provider")
                         .WithMany("provider_Services")
-                        .HasForeignKey("provider_id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Sa3dny.Data.Models.Service", "Service")
                         .WithMany("provider_services")
-                        .HasForeignKey("service_id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Provider");
@@ -1013,23 +1171,28 @@ namespace Sa3dny.Migrations
 
             modelBuilder.Entity("Sa3dny.Data.Models.Requests", b =>
                 {
+                    b.HasOne("Sa3dny.Data.Models.ProviderOffer", "AcceptedOffer")
+                        .WithMany()
+                        .HasForeignKey("AcceptedOfferId");
+
                     b.HasOne("Sa3dny.Data.Models.Customer", "customer")
                         .WithMany("requests")
                         .HasForeignKey("Customer_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Sa3dny.Data.Models.Provider", "provider")
                         .WithMany("requests")
                         .HasForeignKey("Provider_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Sa3dny.Data.Models.Service", "service")
                         .WithMany("requests")
                         .HasForeignKey("Service_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("AcceptedOffer");
 
                     b.Navigation("customer");
 
@@ -1043,13 +1206,13 @@ namespace Sa3dny.Migrations
                     b.HasOne("Sa3dny.Data.Models.Customer", "customer")
                         .WithMany("reviews")
                         .HasForeignKey("Customer_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Sa3dny.Data.Models.Provider", "provider")
                         .WithMany("reviews")
                         .HasForeignKey("Provider_Id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Sa3dny.Data.Models.Requests", "requests")
@@ -1069,7 +1232,27 @@ namespace Sa3dny.Migrations
                 {
                     b.HasOne("Sa3dny.Data.Models.ServiceCategory", null)
                         .WithMany("Services")
-                        .HasForeignKey("ServiceCategoryId_Category");
+                        .HasForeignKey("ServiceCategoryId_Category")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Sa3dny.Models.Notification", b =>
+                {
+                    b.HasOne("Sa3dny.Data.Models.Requests", "Request")
+                        .WithMany()
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Sa3dny.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Request");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Sa3dny.Data.Models.Customer", b =>
@@ -1104,17 +1287,13 @@ namespace Sa3dny.Migrations
 
             modelBuilder.Entity("Sa3dny.Data.Models.Requests", b =>
                 {
+                    b.Navigation("Offers");
+
                     b.Navigation("reviews");
                 });
 
             modelBuilder.Entity("Sa3dny.Data.Models.Service", b =>
                 {
-                    b.Navigation("Edu_Service")
-                        .IsRequired();
-
-                    b.Navigation("Home_Service")
-                        .IsRequired();
-
                     b.Navigation("provider_services");
 
                     b.Navigation("requests");

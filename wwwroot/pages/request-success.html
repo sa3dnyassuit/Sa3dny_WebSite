@@ -2,273 +2,267 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Sent Successfully</title>
 
-  <title>Request Sent Successfully</title>
-
-  <link rel="stylesheet" href="../style/style.css">
-  <link rel="stylesheet" href="../style/request-success.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="../style/request-success.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
 
-  <header>
-    <nav class="navbar">
-      <!-- زرار القائمة -->
-      <div class="menu-toggle" id="openMenu">
-        &#9776; <!-- hamburger icon -->
-      </div>
-      <!-- اللوجو -->
-      <div class="logo">
-        <img src="../images/IMG_7966.PNG" alt="Sa3dny Logo">
-      </div>
-      <ul class="nav-links">
-        <li><a href="./index.html">Home</a></li>
-        <li class="dropdown">
-          <a href="#">Services <i class="fas fa-chevron-down"></i></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Medical Service</a></li>
-            <li><a href="#">Educational Service</a></li>
-            <li><a href="#">Housekeeping Service</a></li>
-          </ul>
-        </li>
+    <header>
+        <nav class="navbar">
+            <div class="menu-toggle" id="openMenu">&#9776;</div>
 
-        <li class="dropdown">
-          <a href="#">Providers <i class="fas fa-chevron-down"></i></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Top Providers</a></li>
-            <li><a href="#">New Providers</a></li>
-            <li><a href="#">Nearby Providers</a></li>
-          </ul>
-        </li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-      <div class="nav-auth">
+            <div class="logo">
+                <img src="../images/IMG_7966.PNG" alt="Sa3dny Logo">
+            </div>
 
-        <button class="btn-register">Register</button>
+            <ul class="nav-links">
+                <li><a href="./index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="#">Services <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Medical Service</a></li>
+                        <li><a href="#">Educational Service</a></li>
+                        <li><a href="#">Housekeeping Service</a></li>
+                    </ul>
+                </li>
 
-        <a href="../pages/login.html">
-          <button class="btn-login">Login</button>
-        </a>
+                <li class="dropdown">
+                    <a href="#">Providers <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Top Providers</a></li>
+                        <li><a href="#">New Providers</a></li>
+                        <li><a href="#">Nearby Providers</a></li>
+                    </ul>
+                </li>
 
-        <div class="profile-icon" id="openProfile">
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
 
-          <i class="fas fa-user-circle"></i>
+            <div class="nav-auth">
+                <button class="btn-register">Register</button>
+                <a href="../pages/login.html">
+                    <button class="btn-login">Login</button>
+                </a>
+                <div class="profile-icon" id="openProfile">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </nav>
 
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo" id="sidebarLogo">
+                    <img src="../images/IMG_7966.PNG" alt="Sa3dny Logo">
+                </div>
+
+                <div class="search-input-container" id="searchInputContainer">
+                    <input type="text" placeholder="Search..." id="sidebarSearchInput">
+                </div>
+
+                <div class="header-controls">
+                    <div class="search-box" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="close-btn" id="closeSidebar">
+                        &times;
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <a href="../pages/index.html"><i class="fas fa-home"></i> Home / Dashboard</a>
+            </div>
+
+            <div class="menu-group">
+                <span class="group-title"><i class="fas fa-cog"></i> Services</span>
+
+                <div class="sub-group">
+                    <span class="sub-title">Medical Service</span>
+                    <div class="items-list">
+                        <a href="#">Item 1</a>
+                        <a href="#">Item 2</a>
+                        <a href="#">Item 3</a>
+                    </div>
+                </div>
+
+                <div class="sub-group">
+                    <span class="sub-title">Educational Service</span>
+                    <div class="items-list">
+                        <a href="#">Item 1</a>
+                        <a href="#">Item 2</a>
+                        <a href="#">Item 3</a>
+                    </div>
+                </div>
+
+                <div class="sub-group">
+                    <span class="sub-title">Housekeeping Service</span>
+                    <div class="items-list">
+                        <a href="#">Item 1</a>
+                        <a href="#">Item 2</a>
+                        <a href="#">Item 3</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <a href="#"><i class="fas fa-envelope"></i> Contact Us</a>
+            </div>
         </div>
 
-      </div>
-    </nav>
-    <!--  القائمة الجانبية اليسرى-->
-    <div class="sidebar" id="sidebar">
-      <div class="sidebar-header">
-        <div class="sidebar-logo" id="sidebarLogo">
-          <img src="../images/IMG_7966.PNG" alt="Sa3dny Logo">
+        <div class="profile-sidebar" id="profileSidebar">
+            <div class="header-controls">
+                <div class="close-btn" id="closeProfileSidebar">
+                    &times;
+                </div>
+            </div>
+
+            <div class="profile-header">
+                <img src="../images/pic4.jpeg" alt="Profile">
+                <h3>Salma Abdo</h3>
+                <p>Student</p>
+            </div>
+
+            <div class="profile-links">
+                <a href="./my-profile.html"><i class="fa-regular fa-user"></i> My Profile</a>
+                <a href="./my-bookings.html"><i class="fa-regular fa-calendar-check"></i> My Bookings</a>
+
+                <div class="divider-line"></div>
+
+                <a href="./my-wallet.html"><i class="fa-solid fa-wallet"></i>My Wallet</a>
+                <a href="./messages.html"><i class="fa-regular fa-message"></i> Messages</a>
+
+                <div class="divider-line"></div>
+
+                <a href="#"><i class="fa-solid fa-gear"></i>Settings</a>
+                <a href="../pages/welcome.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+            </div>
         </div>
 
-        <div class="search-input-container" id="searchInputContainer">
-          <input type="text" placeholder="Search..." id="sidebarSearchInput">
+        <div class="overlay" id="overlay"></div>
+    </header>
+
+    <div class="success-page">
+        <div class="success-box">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+
+            <h1>Request Sent Successfully</h1>
+            <p class="success-text">Your request has been submitted.</p>
+
+            <div class="request-info">
+                <p><strong>Request ID:</strong> <span id="requestId"></span></p>
+                <p><strong>Service:</strong> <span id="service"></span></p>
+                <p><strong>Problem:</strong> <span id="problem"></span></p>
+                <p><strong>Address:</strong> <span id="address"></span></p>
+                <p><strong>Phone:</strong> <span id="phone"></span></p>
+            </div>
+
+            <div class="success-buttons">
+                <a href="./index.html" class="success-btn primary" onclick="clearData()">Back To Home</a>
+                <a href="./home-services.html" class="success-btn secondary" onclick="clearData()">Request Another Service</a>
+            </div>
         </div>
-
-        <div class="header-controls">
-          <div class="search-box" id="searchBtn">
-            <i class="fas fa-search"></i>
-          </div>
-          <div class="close-btn" id="closeSidebar">
-            &times;
-          </div>
-        </div>
-      </div>
-      <div class="menu-item">
-        <a href="../pages/index.html"><i class="fas fa-home"></i> Home / Dashboard</a>
-      </div>
-
-      <div class="menu-group">
-        <span class="group-title"><i class="fas fa-cog"></i> Services</span>
-
-        <div class="sub-group">
-          <span class="sub-title">Medical Service</span>
-          <div class="items-list">
-            <a href="#">Item 1</a>
-            <a href="#">Item 2</a>
-            <a href="#">Item 3</a>
-          </div>
-        </div>
-
-        <div class="sub-group">
-          <span class="sub-title">Educational Service</span>
-          <div class="items-list">
-            <a href="#">Item 1</a>
-            <a href="#">Item 2</a>
-            <a href="#">Item 3</a>
-          </div>
-        </div>
-
-        <div class="sub-group">
-          <span class="sub-title">Housekeeping Service</span>
-          <div class="items-list">
-            <a href="#">Item 1</a>
-            <a href="#">Item 2</a>
-            <a href="#">Item 3</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="menu-item">
-        <a href="#"><i class="fas fa-envelope"></i> Contact Us</a>
-      </div>
     </div>
-    <!-- القائمة الجانبية اليمنى -->
-    <div class="profile-sidebar" id="profileSidebar">
-      <div class="header-controls">
-        <div class="close-btn" id="closeProfileSidebar">
-          &times;
-        </div>
-      </div>
-      <div class="profile-header">
-
-        <img src="../images/pic4.jpeg">
-
-        <h3>Salma Abdo</h3>
-
-        <p>Student</p>
-
-      </div>
-
-
-      <div class="profile-links">
-
-        <a href="./my-profile.html"> <i class="fa-regular fa-user"></i> My Profile</a>
-        <a href="./my-bookings.html"> <i class="fa-regular fa-calendar-check"></i> My Bookings</a>
-        
-        <div class="divider-line"></div>
-
-      <a href="./my-wallet.html"><i class="fa-solid fa-wallet"></i>My Wallet</a>
-        <a href="./messages.html"><i class="fa-regular fa-message"></i> Messages</a>
-        
-        <div class="divider-line"></div>
-
-      
-        <a href="#"> <i class="fa-solid fa-gear"></i>Settings</a>
-
-        <a href="../pages/welcome.html"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
-
-
-      </div>
-    </div>
-    <div class="overlay" id="overlay"></div>
-  </header>
-
-  <div class="success-page">
-
-    <div class="success-box">
-
-      <div class="success-icon">
-        <i class="fas fa-check"></i>
-      </div>
-
-      <h1 id="successTitle"></h1>
-
-      <p class="success-text"></p>
-
-      <!-- wrapper مهم جدًا -->
-      <div class="request-box-wrapper">
-
-        <!-- الكارد الحقيقي -->
-        <div class="request-info">
-          <h3>Request Confirmation</h3>
-          <p>Status: Pending</p>
-          <p>Request ID: #SA3DNY2026</p>
-        </div>
-
-        <!-- الغطا -->
-        <div class="card-cover" id="cardCover">
-          <div class="fold-corner"></div>
-        </div>
-
-      </div>
-
-      <div class="success-buttons">
-
-        <a href="./index.html" class="success-btn primary">
-          Back To Home
-        </a>
-
-        <a href="./home-services.html" class="success-btn secondary">
-          Request Another Service
-        </a>
-
-      </div>
-
-    </div>
-
-  </div>
 
     <footer>
-    <div class="footer-top">
-      <div class="footer-logo">
-        <img src="../images/IMG_7966.PNG" alt="Sa3dny Logo">
-      </div>
-      <div class="footer-subscribe">
-        <span>Subscribe now</span>
-        <div class="subscribe-input-group">
-          <input type="email" placeholder="Your email">
-          <button>Subscribe</button>
+        <div class="footer-top">
+            <div class="footer-logo">
+                <img src="../images/IMG_7966.PNG" alt="Sa3dny Logo">
+            </div>
+            <div class="footer-subscribe">
+                <span>Subscribe now</span>
+                <div class="subscribe-input-group">
+                    <input type="email" placeholder="Your email">
+                    <button>Subscribe</button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="footer-main">
-      <div class="footer-col">
-        <h4>About</h4>
-        <p>
 
-          Sa3dny connects students with trusted service providers.
+        <div class="footer-main">
+            <div class="footer-col">
+                <h4>About</h4>
+                <p>
+                    Sa3dny connects students with trusted service providers.
+                    From home services to tutoring and medical care — everything in one place.
+                </p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
 
-          From home services to tutoring and medical care — everything in one place.
+            <div class="footer-col">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Case</a></li>
+                    <li><a href="#">Request Pickup</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
 
-        </p>
-        <div class="social-links">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <div class="footer-col">
+                <h4>Working Hours</h4>
+                <p>Mon - Fri: 9:00AM - 6:00PM</p>
+                <p>Sat - Sun: 8:00AM - 4:00PM</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Get In Touch</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Add: New Hyde Park, NY 11040</p>
+                <p><i class="fas fa-envelope"></i> Email: example@info.com</p>
+                <p><i class="fas fa-phone"></i> Phone: 333 666 0000</p>
+            </div>
         </div>
-      </div>
-      <div class="footer-col">
-        <h4>Links</h4>
-        <ul>
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Case</a></li>
-          <li><a href="#">Request Pickup</a></li>
-          <li><a href="#">Contact Us</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Working Hours</h4>
-        <p>Mon - Fri: 9:00AM - 6:00PM</p>
-        <p>Sat - Sun: 8:00AM - 4:00PM</p>
-      </div>
-      <div class="footer-col">
-        <h4>Get In Touch</h4>
-        <p><i class="fas fa-map-marker-alt"></i> Add: New Hyde Park, NY 11040</p>
-        <p><i class="fas fa-envelope"></i> Email: example@info.com</p>
-        <p><i class="fas fa-phone"></i> Phone: 333 666 0000</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>Copyright 2023 by About template All Right Reserved.</p>
-    </div>
-  </footer>
 
+        <div class="footer-bottom">
+            <p>Copyright 2023 by About template All Right Reserved.</p>
+        </div>
+    </footer>
 
-  <script src="../script/request-success.js"></script>
-<script src="../script/script.js"></script>
-  <script src="../script/menu.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const isLoggedIn = sessionStorage.getItem("isLoggedIn");
+
+            if (isLoggedIn !== "true") {
+                window.location.href = "./login.html";
+                return;
+            }
+
+            const dataString =
+                sessionStorage.getItem("requestData") || localStorage.getItem("requestData");
+
+            if (!dataString) {
+                return;
+            }
+
+            const req = JSON.parse(dataString);
+
+            document.getElementById("requestId").innerText = req.requestId || "";
+            document.getElementById("service").innerText = req.service || "";
+            document.getElementById("problem").innerText = req.problem || "";
+            document.getElementById("address").innerText = req.address || "";
+            document.getElementById("phone").innerText = req.phone || "";
+        });
+
+        function clearData() {
+            sessionStorage.removeItem("requestData");
+            localStorage.removeItem("requestData");
+        }
+    </script>
+
+    <script src="../script/script.js"></script>
+    <script src="../script/menu.js"></script>
 </body>
-
 </html>

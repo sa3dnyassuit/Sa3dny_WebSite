@@ -1,18 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Sa3dny.Data.Models
 {
     public class Provider_Service
     {
-        public int provider_id { get; set; }
-        public int service_id { get; set; }
+        // تم التغيير لـ Guid لتوافق الموديلات الأصلية
+        public Guid ProviderId { get; set; }
+        public Guid ServiceId { get; set; }
+
+        [ForeignKey("ProviderId")]
         public Provider Provider { get; set; }
+
+        [ForeignKey("ServiceId")]
         public Service Service { get; set; }
     }
 }

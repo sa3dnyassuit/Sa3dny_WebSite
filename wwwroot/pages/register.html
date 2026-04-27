@@ -8,19 +8,13 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="back">
-            <button class="back-btn" onclick="history.back()" data-ar="رجوع" data-en="back">back</button>
-        </div>
-        <div class="nav-logo">
-            <img src="../images/logo white.PNG" alt="Sa3dny">
-        </div>
+        <div class="back"><button class="back-btn" onclick="history.back()">back</button></div>
+        <div class="nav-logo"><img src="../images/logo white.PNG" alt="Sa3dny"></div>
         <ul class="nav-links">
-            <li><a href="#">Services</a></li>
-            |
-            <li><a href="../pages/register.html">Sign up</a></li>
-            |
-            <li><a href="./login.html">Log in</a></li>
-            <li><a href="../pages/become-provider.html" class="provider-btn">Become a Provider</a></li>
+            <li><a href="../index.html">Home</a></li> |
+            <li><a href="register.html">Sign up</a></li> |
+            <li><a href="login.html">Log in</a></li>
+            <li><a href="become-provider.html" class="provider-btn">Become a Provider</a></li>
         </ul>
     </nav>
 
@@ -28,61 +22,54 @@
 
     <main class="wrapper">
         <section class="card">
-            <div class="brand">
-                <img src="../images/logo white.PNG" alt="Sa3dny" class="brand-logo">
-            </div>
+            <div class="brand"><img src="../images/logo white.PNG" alt="Sa3dny" class="brand-logo"></div>
 
             <form class="form" id="registerForm">
                 <div class="field">
                     <input type="text" id="regFullName" placeholder="Full Name" required>
                 </div>
+
                 <div class="field">
                     <input type="tel" id="regPhone" placeholder="Phone" required>
                 </div>
+
                 <div class="field">
                     <select id="regLocation" required>
                         <option value="" disabled selected>Your Location In Assuit</option>
                         <option value="Ferial">Ferial</option>
-                        <option value="Mousna3 Sayed">Mousna3 Sayed</option>
+                        <option value="Mousna3 Sayed">Masnaa Sayed</option>
                         <option value="Governorate Street">Governorate Street</option>
-                        <option value="Libraries">Libraries</option>
-                        <option value="Asmaa Allah Square">Asmaa Allah Square</option>
-                        <option value="Station">Station</option>
-                        <option value="Fateh">Fateh</option>
-                        <option value="Hamraa">Hamraa</option>
+                        <option value="Libraries">Libraries Area</option>
+                        <option value="Asmaa Allah Square">Asmaa Allah Al-Husna Square</option>
+                        <option value="Station">The Station</option>
+                        <option value="Fateh">Al-Fateh</option>
+                        <option value="Hamraa">Al-Hamraa</option>
                     </select>
                 </div>
+
                 <div class="field">
                     <input type="email" id="regEmail" placeholder="Email" required>
                 </div>
+
                 <div class="field pass">
                     <input type="password" id="regPassword" placeholder="Password" required>
                     <button type="button" class="eye">👁</button>
                 </div>
+
                 <div class="field pass">
                     <input type="password" id="regConfirmPassword" placeholder="Password Confirmation" required>
                     <button type="button" class="eye">👁</button>
                 </div>
+
                 <button type="submit" class="btn">Register</button>
+
                 <p class="bottom">
-                    Already have an account?
-                    <a href="login.html" class="login">Login</a>
+                    Already have an account? <a href="login.html" class="login">Login</a>
                 </p>
             </form>
         </section>
     </main>
 
-    <button class="chat" data-ar="مساعدة ؟" data-en="Help?">Help?</button>
-
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="#" data-ar="سياسة الخصوصية" data-en="Privacy Policy">Privacy Policy</a>
-            <a href="#" data-ar="شروط الأستخدام" data-en="Terms of Use">Terms of Use</a>
-            <a href="#" data-ar="تواصل معنا" data-en="Contact">Contact</a>
-        </div>
-    </footer>
-
-    <script src="../script/translate.js"></script>
     <script src="../script/auth.js"></script>
 </body>
 </html>

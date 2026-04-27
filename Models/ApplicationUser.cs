@@ -1,34 +1,20 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Sa3dny.Data.Models
 {
-    public class ApplicationUser
+    public class ApplicationUser : IdentityUser
     {
         [Required]
         [DisplayName("Name")]
         public string Name { get; set; }
 
         [Required]
-        [DisplayName("Phone")]
-        [Phone]
-        public string Phone { get; set; }
-
-        [Required]
-        [DisplayName("Email")]
-        [EmailAddress]
-        public string Email { get; set; }
-
-        [Required]
-        [DisplayName("Password")]
-        [MinLength(6)]
-        public string PasswordHash { get; set; }
-
-        
-        [Required]
         [DisplayName("Location")]
         public string LocationName { get; set; }
 
-        public DateTime? created_at { get; set; }
+        public DateTime? created_at { get; set; } = DateTime.UtcNow;
     }
 }
