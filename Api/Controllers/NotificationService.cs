@@ -24,7 +24,8 @@ namespace Sa3dny.Api.Controllers
                 UserId = userId,
                 Title = title,
                 Message = message,
-                RequestId = requestId
+                RequestId = requestId,
+                
             };
 
             _context.Notifications.Add(notification);

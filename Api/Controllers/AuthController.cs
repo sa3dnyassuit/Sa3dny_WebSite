@@ -75,7 +75,6 @@ namespace Sa3dny.Api.Controllers
                         .Select(s => s.service_name)
                         .FirstOrDefault(),
                     p.NationalIdImagePath,
-                    p.ProfessionalLicensePath,
                     p.created_at
                 })
                 .ToListAsync();
@@ -165,7 +164,7 @@ namespace Sa3dny.Api.Controllers
                 return BadRequest(new { message = "Service not found" });
 
             var nationalIdPath = SaveBase64File(dto.NationalIdImageBase64, "national_ids");
-            var licensePath = SaveBase64File(dto.ProfessionalLicenseBase64, "licenses");
+
 
             var identityUser = new ApplicationUser
             {
@@ -194,7 +193,6 @@ namespace Sa3dny.Api.Controllers
                 ServiceCategoryId = serviceCategory.Id_Category,
                 ServiceId = service.service_id,
                 NationalIdImagePath = nationalIdPath,
-                ProfessionalLicensePath = licensePath,
                 created_at = DateTime.UtcNow
             };
 
@@ -254,6 +252,53 @@ namespace Sa3dny.Api.Controllers
                 ExpiresAt = DateTime.UtcNow.AddDays(7)
             });
         }
+
+        [HttpPost("register-admin")]
+        public async Task<IActionResult> RegisterAdmin([FromBody] CreateAdminDto dto)
+        {
+            //  check email exists
+            var existingUser = await _userManager.FindByEmailAsync(dto.Email);
+
+            if (existingUser != null)
+                return BadRequest("Email already exists");
+
+            //  create identity user
+            var user = new ApplicationUser
+            {
+                UserName = dto.Email,
+                Email = dto.Email,
+                PasswordHash=dto.Password,
+                Name = dto.Name,
+                LocationName = "Admin"
+            };
+
+            var result = await _userManager.CreateAsync(user, dto.Password);
+
+            if (!result.Succeeded)
+                return BadRequest(result.Errors);
+
+            //  add role Admin
+            await _userManager.AddToRoleAsync(user, "Admin");
+
+            //  save in Admin table
+            var admin = new Admin
+            {
+                Name_Admin = dto.Name,
+                UserId = user.Id,
+                Access = dto.Access ?? "Full"
+            };
+
+            _context.Admin.Add(admin);
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                message = "Admin created successfully",
+                user.Email,
+                user.Id
+            });
+        }
+
         private string SaveBase64File(string base64, string folder)
         {
             if (string.IsNullOrEmpty(base64)) return null;

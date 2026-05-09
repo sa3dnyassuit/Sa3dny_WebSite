@@ -8,25 +8,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Sa3dny.Migrations
 {
     /// <inheritdoc />
-    public partial class chat : Migration
+#pragma warning disable CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+    public partial class payment : Migration
+#pragma warning restore CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Admin",
-                columns: table => new
-                {
-                    Admin_ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name_Admin = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Access = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Admin", x => x.Admin_ID);
-                });
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -112,6 +100,27 @@ namespace Sa3dny.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Admin",
+                columns: table => new
+                {
+                    Admin_ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name_Admin = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Access = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admin", x => x.Admin_ID);
+                    table.ForeignKey(
+                        name: "FK_Admin_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -334,8 +343,7 @@ namespace Sa3dny.Migrations
                     GovernorateId = table.Column<int>(type: "int", nullable: false),
                     ServiceCategoryId = table.Column<int>(type: "int", nullable: false),
                     ServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NationalIdImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfessionalLicensePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    NationalIdImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -430,10 +438,36 @@ namespace Sa3dny.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProviderOffers",
+                name: "Payments",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    Method = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ScreenshotUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SenderNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_AspNetUsers_UserId1",
+                        column: x => x.UserId1,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProviderOffers",
+                columns: table => new
+                {
+                    offerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProviderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
@@ -441,7 +475,7 @@ namespace Sa3dny.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProviderOffers", x => x.Id);
+                    table.PrimaryKey("PK_ProviderOffers", x => x.offerId);
                     table.ForeignKey(
                         name: "FK_ProviderOffers_Providers_ProviderId",
                         column: x => x.ProviderId,
@@ -481,7 +515,7 @@ namespace Sa3dny.Migrations
                         name: "FK_Requests_ProviderOffers_AcceptedOfferId",
                         column: x => x.AcceptedOfferId,
                         principalTable: "ProviderOffers",
-                        principalColumn: "Id");
+                        principalColumn: "offerId");
                     table.ForeignKey(
                         name: "FK_Requests_Providers_Provider_Id",
                         column: x => x.Provider_Id,
@@ -610,6 +644,11 @@ namespace Sa3dny.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Admin_UserId",
+                table: "Admin",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -683,6 +722,16 @@ namespace Sa3dny.Migrations
                 name: "IX_Notifications_UserId",
                 table: "Notifications",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_RequestId",
+                table: "Payments",
+                column: "RequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_UserId1",
+                table: "Payments",
+                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Provider_Services_ServiceId",
@@ -777,6 +826,14 @@ namespace Sa3dny.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
+                name: "FK_Payments_Requests_RequestId",
+                table: "Payments",
+                column: "RequestId",
+                principalTable: "Requests",
+                principalColumn: "Request_Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
                 name: "FK_ProviderOffers_Requests_RequestId",
                 table: "ProviderOffers",
                 column: "RequestId",
@@ -829,6 +886,9 @@ namespace Sa3dny.Migrations
 
             migrationBuilder.DropTable(
                 name: "Notifications");
+
+            migrationBuilder.DropTable(
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Provider_Services");

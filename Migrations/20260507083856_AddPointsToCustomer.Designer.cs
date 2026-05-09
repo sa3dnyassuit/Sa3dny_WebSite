@@ -12,8 +12,8 @@ using Sa3dny.Data;
 namespace Sa3dny.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260426185026_chat")]
-    partial class chat
+    [Migration("20260507083856_AddPointsToCustomer")]
+    partial class AddPointsToCustomer
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -174,7 +174,13 @@ namespace Sa3dny.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Admin_ID");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Admin");
                 });
@@ -314,6 +320,9 @@ namespace Sa3dny.Migrations
                         .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -591,6 +600,53 @@ namespace Sa3dny.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Sa3dny.Data.Models.Payment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Method")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("RequestId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ScreenshotUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SenderNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RequestId");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("Payments");
+                });
+
             modelBuilder.Entity("Sa3dny.Data.Models.Provider", b =>
                 {
                     b.Property<Guid>("provider_id")
@@ -620,10 +676,6 @@ namespace Sa3dny.Migrations
                         .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
-
-                    b.Property<string>("ProfessionalLicensePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ServiceCategoryId")
                         .HasColumnType("int");
@@ -662,7 +714,7 @@ namespace Sa3dny.Migrations
 
             modelBuilder.Entity("Sa3dny.Data.Models.ProviderOffer", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("offerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -679,7 +731,7 @@ namespace Sa3dny.Migrations
                     b.Property<Guid>("RequestId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("offerId");
 
                     b.HasIndex("ProviderId");
 
@@ -1034,6 +1086,17 @@ namespace Sa3dny.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Sa3dny.Data.Models.Admin", b =>
+                {
+                    b.HasOne("Sa3dny.Data.Models.ApplicationUser", "applicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("applicationUser");
+                });
+
             modelBuilder.Entity("Sa3dny.Data.Models.ChatMessage", b =>
                 {
                     b.HasOne("Sa3dny.Data.Models.Requests", "Request")
@@ -1094,6 +1157,24 @@ namespace Sa3dny.Migrations
                         .WithMany("Locations")
                         .HasForeignKey("GovernorateId_Governorate")
                         .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("Sa3dny.Data.Models.Payment", b =>
+                {
+                    b.HasOne("Sa3dny.Data.Models.Requests", "Request")
+                        .WithMany()
+                        .HasForeignKey("RequestId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Sa3dny.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Request");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Sa3dny.Data.Models.Provider", b =>

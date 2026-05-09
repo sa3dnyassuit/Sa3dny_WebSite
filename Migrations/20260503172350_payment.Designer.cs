@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sa3dny.Data;
 
@@ -11,9 +12,11 @@ using Sa3dny.Data;
 namespace Sa3dny.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260503172350_payment")]
+    partial class Payment : Migration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,19 +267,7 @@ namespace Sa3dny.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("FileMimeType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FileUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Message")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MessageType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -329,9 +320,6 @@ namespace Sa3dny.Migrations
                         .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
-
-                    b.Property<int>("Points")
-                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -615,7 +603,7 @@ namespace Sa3dny.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal?>("Amount")
+                    b.Property<decimal>("Amount")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
@@ -623,21 +611,25 @@ namespace Sa3dny.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Method")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("RequestId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<byte[]>("ScreenshotData")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("ScreenshotUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SenderNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserId1")
@@ -1392,6 +1384,11 @@ namespace Sa3dny.Migrations
                     b.Navigation("Services");
                 });
 #pragma warning restore 612, 618
+        }
+
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            throw new NotImplementedException();
         }
     }
 }

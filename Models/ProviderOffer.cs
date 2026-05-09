@@ -7,7 +7,7 @@ namespace Sa3dny.Data.Models
     public class ProviderOffer
     {
         [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid offerId { get; set; } = Guid.NewGuid();
 
         [Required]
         public Guid RequestId { get; set; }

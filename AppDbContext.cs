@@ -17,6 +17,7 @@ namespace Sa3dny.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Provider> Providers { get; set; }
         public DbSet<Requests> Requests { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         public DbSet<ProviderOffer> ProviderOffers { get; set; } // ✅ إضافة ProviderOffers
         public DbSet<Admin> Admin { get; set; }
         public DbSet<Service> Services { get; set; }
@@ -33,6 +34,9 @@ namespace Sa3dny.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Payment>()
+            .Property(p => p.Amount)
+            .HasPrecision(18, 2);
 
             // ✅ ضبط العلاقات لمنع الـ Cascade Cycles (مهم جداً للـ SQL Server)
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

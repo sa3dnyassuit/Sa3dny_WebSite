@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Sa3dny.Api.DTOs.Requests.Provider;
 using Sa3dny.Data;
 using Sa3dny.Data.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Sa3dny.Api.Controllers
 {
@@ -12,10 +15,13 @@ namespace Sa3dny.Api.Controllers
     public class ProviderRequestsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly NotificationService _notificationService;
 
-        public ProviderRequestsController(AppDbContext context)
+
+        public ProviderRequestsController(AppDbContext context, NotificationService notificationService)
         {
             _context = context;
+            _notificationService = notificationService;
         }
 
         [AllowAnonymous]
@@ -55,7 +61,7 @@ namespace Sa3dny.Api.Controllers
 
             var offer = new ProviderOffer
             {
-                Id = Guid.NewGuid(),
+                offerId = Guid.NewGuid(),
                 RequestId = dto.RequestId,
                 ProviderId = provider.provider_id,
                 Price = dto.Price
@@ -69,8 +75,19 @@ namespace Sa3dny.Api.Controllers
             return Ok(new
             {
                 message = "Offer sent successfully",
-                OfferId = offer.Id
+                OfferId = offer.offerId
             });
+            var customerUserId = await _context.Customers
+             .Where(c => c.Id_Customer == request.Customer_Id)
+            .Select(c => c.UserId)
+            .FirstOrDefaultAsync();
+
+            await _notificationService.Send(
+                customerUserId,
+                "عرض جديد 💰",
+                $"في بروفايدر بعتلك سعر: {dto.Price}",
+                request.Request_Id
+            );
         }
 
         [AllowAnonymous]

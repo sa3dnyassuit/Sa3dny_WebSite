@@ -43,7 +43,6 @@ namespace Sa3dny.Api.DTOs.Auth
         [Required]
         public string NationalIdImageBase64 { get; set; }
 
-        [Required]
-        public string ProfessionalLicenseBase64 { get; set; }
+        
     }
 }

@@ -54,8 +54,6 @@ namespace Sa3dny.Data.Models
         [Required]
         public string NationalIdImagePath { get; set; }
 
-        [Required]
-        public string ProfessionalLicensePath { get; set; }
 
         public ICollection<Review> reviews { get; set; }
         public ICollection<Provider_Service> provider_Services { get; set; }
